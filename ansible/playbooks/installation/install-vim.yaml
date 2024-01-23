@@ -1,0 +1,10 @@
+---
+- name: install vim package
+  hosts: all
+  become: yes
+  tasks:
+    - name: install vim package
+      apt:
+        update_cache: yes
+        name: vim
+        state: present
