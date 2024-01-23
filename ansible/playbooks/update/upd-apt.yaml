@@ -6,21 +6,8 @@
       when: ansible_pkg_mgr == 'apt'
       apt:
         update_cache: yes
-
-    - name: Update packages with yum
-      when: ansible_pkg_mgr == 'yum'
-      yum:
-        name: '*'
-        state: latest
-
+        
     - name: Upgrade packages with apt
       when: ansible_pkg_mgr == 'apt'
       apt:
         upgrade: dist
-
-    - name: Upgrade packages with yum
-      when: ansible_pkg_mgr == 'yum'
-      yum:
-        name: '*'
-        state: latest
-        exclude: kernel*
