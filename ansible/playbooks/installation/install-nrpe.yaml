@@ -1,7 +1,8 @@
 ---
-- hosts: all
+- hosts: clients
   become: yes
   tasks:
-    - name: install nrpe from source
-      command: sh /etc/scripts/nrpe.sh
-        remote_src: yes
+    - name: install nrpe
+      ansible.builtin.shell: |
+        cd /etc/scripts
+        ./nrpe.sh
