@@ -1,6 +1,5 @@
 ---
-- name: install vim package
-  hosts: all
+- hosts: all
   become: yes
   tasks:
     - name: install vim package
