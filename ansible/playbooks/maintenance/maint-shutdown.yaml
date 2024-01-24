@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: shutdown machine
+    shutdown:
+      delay: 5
+      #msg: default
