@@ -3,6 +3,6 @@
   become: yes
   tasks:
   - name: shutdown machine
-    shutdown:
+    community.general.shutdown:
       delay: 5
       #msg: default
