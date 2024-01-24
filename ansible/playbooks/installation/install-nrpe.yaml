@@ -3,5 +3,5 @@
   become: yes
   tasks:
     - name: install nrpe from source
-      remote_src: yes
       command: sh /etc/scripts/nrpe.sh
+        remote_src: yes
