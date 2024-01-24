@@ -1,0 +1,20 @@
+---
+- hosts: all
+  tasks:
+    - name: clone lxc container
+      community.general.proxmox:
+        node: proxmox
+        api_user: root@pam
+        api_password: 19990317a
+        api_host: 192.168.1.10
+        clone: 999
+        storage: VM-Drives
+        hostname: test-ct-900
+    - name: start lxc container
+      community.general.proxmox:
+        node: proxmox
+        api_user: root@pam
+        api_password: 19990317a
+        api_host: 192.168.1.10
+        hostname: test-ct-900
+        state: started
