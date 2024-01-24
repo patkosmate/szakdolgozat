@@ -9,14 +9,14 @@
         api_host: 192.168.1.10
         clone: 1000
         storage: VM-Drives
-        vmid: 200 #if specific vmid if needed
-        hostname: test-standard-1 #modify to desire hostname
+        vmid: 201 #if specific vmid if needed
+        hostname: test-standard-2 #modify to desire hostname
     - name: start standard lxc container
       community.general.proxmox:
         node: proxmox
         api_user: root@pam
         api_password: 19990317a
         api_host: 192.168.1.10
-        vmid: 200 #if specific vmid if needed
-        hostname: test-standard-1 #modify to desire hostname
+        vmid: 201 #if specific vmid if needed
+        hostname: test-standard-2 #modify to desire hostname
         state: started
