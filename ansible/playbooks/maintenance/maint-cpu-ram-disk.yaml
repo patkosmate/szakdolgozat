@@ -1,8 +1,8 @@
 ---
 - hosts: all
-  gather_facts: yes
+  gather_facts: false
   tasks:
-  
+
     - name: ping host
       ansible.builtin.ping:
       ignore_errors: true
