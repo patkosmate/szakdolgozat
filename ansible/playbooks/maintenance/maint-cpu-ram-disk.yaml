@@ -1,0 +1,21 @@
+---
+- name: Gather CPU RAM and Disk Space Usage
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Gather CPU usage
+      shell: top -bn1 | grep 'Cpu(s)' | awk '{print $2}'
+      register: cpu_usage
+    - name: Gather RAM Usage
+      shell: top -bn1 | awk '/MiB Mem/ {printf "%.2f\n", $8/$4 * 100}'
+      register: ram_usage
+    - name: Gather Disk Space
+      shell: "df -h --output=pcent / | awk 'NR==2 {print $1}'"
+      register: disk_space
+    - name: Usage Stats
+      debug:
+        msg: 
+          - "Executed On: {{ ansible_date_time.date }} {{ ansible_date_time.hour }}:{{ ansible_date_time.minute }}"
+          - "CPU Usage: {{ cpu_usage.stdout }}%"
+          - "RAM Usage: {{ ram_usage.stdout }}%"
+          - "Disk Space Used: {{ disk_space.stdout }}"
