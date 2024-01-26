@@ -1,35 +1,64 @@
 ---
-- name: Gather CPU RAM and Disk Space Usage
-  hosts: all
+- hosts: all
   gather_facts: yes
   tasks:
-    - name: Gather CPU usage
+
+    - name: gather cpu usage
       shell: top -bn1 | grep 'Cpu(s)' | awk '{print $2}'
       register: cpu_usage
-    - name: Gather RAM Usage
+
+    - name: gather ram usage
       shell: top -bn1 | awk '/MiB Mem/ {printf "%.2f\n", $8/$4 * 100}'
       register: ram_usage
-    - name: Gather Disk Usage
+
+    - name: gather disk usage
       shell: "df -h --output=pcent / | awk 'NR==2 {print $1}'"
       register: disk_usage
-    - name: Usage Stats
-      debug:
-        msg: 
-          - "CPU Usage: {{ cpu_usage.stdout }}%"
-          - "RAM Usage: {{ ram_usage.stdout }}%"
-          - "Disk Usage: {{ disk_usage.stdout }}"
 
-    - name: Sending an e-mail using Gmail SMTP servers
+    - name: send mail of cpu if needed
+      when: cpu_usage.stdout[:-1]|int > 90
       community.general.mail:
         host: smtp.gmail.com
         port: 587
         username: patkosmate55@gmail.com
         password: jwvq fyqv ucyb tymd
         to: patkosmate55@gmail.com
-        subject: CPU, RAM, Disk usage
+        subject: cpu usage alert - {{ ansible_hostname }}
         body: |
-          {{ ansible_hostname }}
-          "CPU Usage: {{ cpu_usage.stdout }}%"
-          "RAM Usage: {{ ram_usage.stdout }}%"
-          "Disk Usage: {{ disk_usage.stdout }}"
+          the cpu usage on {{ ansible_hostname }} is {{ cpu_usage.stdout }}%, take action
+          
+          ram usage: {{ ram_usage.stdout }}%
+          disk usage: {{ disk_usage.stdout }}
+      delegate_to: localhost
+
+    - name: send mail of ram if needed
+      when: ram_usage.stdout[:-1]|int > 90
+      community.general.mail:
+        host: smtp.gmail.com
+        port: 587
+        username: patkosmate55@gmail.com
+        password: jwvq fyqv ucyb tymd
+        to: patkosmate55@gmail.com
+        subject: ram usage alert - {{ ansible_hostname }}
+        body: |
+          the ram usage on {{ ansible_hostname }} is {{ ram_usage.stdout }}%, take action
+          
+          cpu usage: {{ cpu_usage.stdout }}%
+          disk usage: {{ disk_usage.stdout }}
+      delegate_to: localhost
+
+    - name: send mail of disk if needed
+      when: disk_usage.stdout[:-1]|int > 90
+      community.general.mail:
+        host: smtp.gmail.com
+        port: 587
+        username: patkosmate55@gmail.com
+        password: jwvq fyqv ucyb tymd
+        to: patkosmate55@gmail.com
+        subject: disk usage alert - {{ ansible_hostname }}
+        body: |
+          the disk usage on {{ ansible_hostname }} is {{ disk_usage.stdout }}, take action
+          
+          cpu usage: {{ cpu_usage.stdout }}%
+          ram usage: {{ ram_usage.stdout }}%
       delegate_to: localhost
