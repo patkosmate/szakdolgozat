@@ -16,7 +16,7 @@
       register: disk_usage
 
     - name: send mail of cpu if needed
-      when: cpu_usage.stdout[:-1]|int > -1
+      when: cpu_usage.stdout[:-1]|int > 90
       community.general.mail:
         host: smtp.gmail.com
         port: 587
@@ -32,7 +32,7 @@
       delegate_to: localhost
 
     - name: send mail of ram if needed
-      when: ram_usage.stdout[:-1]|int > 90
+      when: ram_usage.stdout[:-1]|int > -1
       community.general.mail:
         host: smtp.gmail.com
         port: 587
