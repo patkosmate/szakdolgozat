@@ -15,40 +15,21 @@
     - name: Usage Stats
       debug:
         msg: 
-          #- "Executed On: {{ ansible_date_time.date }} {{ ansible_date_time.hour }}:{{ ansible_date_time.minute }}"
           - "CPU Usage: {{ cpu_usage.stdout }}%"
           - "RAM Usage: {{ ram_usage.stdout }}%"
           - "Disk Usage: {{ disk_usage.stdout }}"
 
-    - name: send discord message when cpu usage is over 90%
-      uri:
-        url: "https://discord.com/api/webhooks/1199337699656618004/yoV2LbuKw2lW76tAIKlqjIeFXkS4B3kMQEXvUMyqxGh-Bcx6RApYdOvepEV6RO3QfpoX"
-        method: POST
-        body_format: json
-        body: '{"content": "cpu usage on {{ ansible_hostname }} is above 0%!"}'
-        headers:
-          Content-Type: application/json
-        status_code: 204
-      when: cpu_usage.stdout[:-1]|int > 0  
-
-    - name: send discord message when ram usage is over 0%
-      uri:
-        url: "https://discord.com/api/webhooks/1199337699656618004/yoV2LbuKw2lW76tAIKlqjIeFXkS4B3kMQEXvUMyqxGh-Bcx6RApYdOvepEV6RO3QfpoX"
-        method: POST
-        body_format: json
-        body: '{"content": "ram usage on {{ ansible_hostname }} is above 0%!"}'
-        headers:
-          Content-Type: application/json
-        status_code: 204
-      when: ram_usage.stdout[:-1]|int > 0
-
-    - name: send discord message when disk usage is over 0%
-      uri:
-        url: "https://discord.com/api/webhooks/1199337699656618004/yoV2LbuKw2lW76tAIKlqjIeFXkS4B3kMQEXvUMyqxGh-Bcx6RApYdOvepEV6RO3QfpoX"
-        method: POST
-        body_format: json
-        body: '{"content": "disk usage on {{ ansible_hostname }} is above 0%!"}'
-        headers:
-          Content-Type: application/json
-        status_code: 204
-      when: disk_usage.stdout[:-1]|int > 0
+    - name: Sending an e-mail using Gmail SMTP servers
+      community.general.mail:
+        host: smtp.gmail.com
+        port: 587
+        username: patkosmate55@gmail.com
+        password: jwvq fyqv ucyb tymd
+        to: patkosmate55@gmail.com
+        subject: CPU, RAM, Disk usage
+        body: |
+          {{ ansible_hostname }}
+          "CPU Usage: {{ cpu_usage.stdout }}%"
+          "RAM Usage: {{ ram_usage.stdout }}%"
+          "Disk Usage: {{ disk_usage.stdout }}"
+      delegate_to: localhost
