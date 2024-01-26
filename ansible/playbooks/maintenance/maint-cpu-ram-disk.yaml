@@ -1,11 +1,11 @@
 ---
-- hosts: localhost
+- hosts: all
   gather_facts: false
   tasks:
-
+  
     - name: ping host
-      ansible.builtin.script:
-        cmd: "./tmp/check-power-state.sh {{ inventory_hostname }}"
+      ansible.builtin.ping:
+      ignore_errors: true
       register: ping_result
 
     - name: gather cpu usage
@@ -21,7 +21,7 @@
       register: disk_usage
 
     - name: send mail if host is unreachable
-      when: ping_result.rc != 0
+      when: ping_result.failed
       community.general.mail:
         host: smtp.gmail.com
         port: 587
