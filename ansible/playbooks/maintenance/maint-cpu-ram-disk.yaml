@@ -2,11 +2,6 @@
 - hosts: all
   gather_facts: false
   tasks:
-  
-    - name: ping host
-      ansible.builtin.ping:
-      ignore_errors: true
-      register: ping_result
 
     - name: gather cpu usage
       shell: top -bn1 | grep 'Cpu(s)' | awk '{print $2}'
@@ -19,22 +14,6 @@
     - name: gather disk usage
       shell: "df -h --output=pcent / | awk 'NR==2 {print $1}'"
       register: disk_usage
-
-    - name: send mail if host is unreachable
-      when: ping_result.failed
-      community.general.mail:
-        host: smtp.gmail.com
-        port: 587
-        username: patkosmate55@gmail.com
-        password: jwvq fyqv ucyb tymd
-        to: patkosmate55@gmail.com
-        subject: host unreachable alert - {{ ansible_hostname }}
-        body: |
-          the host {{ ansible_hostname }} is unreachable, take action
-          the ram usage on {{ ansible_hostname }} is {{ ram_usage.stdout }}%, take action
-          
-          cpu usage: {{ cpu_usage.stdout }}%
-          disk usage: {{ disk_usage.stdout }}
 
     - name: send mail of cpu if needed
       when: cpu_usage.stdout[:-1]|int > 90
