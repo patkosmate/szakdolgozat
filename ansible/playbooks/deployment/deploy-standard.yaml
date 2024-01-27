@@ -1,6 +1,7 @@
 ---
 - hosts: all
   tasks:
+
     - name: clone standard lxc container
       community.general.proxmox:
         node: proxmox
@@ -11,6 +12,7 @@
         storage: VM-Drives
         vmid: 202 #if specific vmid if needed
         hostname: test-standard-3 #modify to desire hostname
+        
     - name: start standard lxc container
       community.general.proxmox:
         node: proxmox

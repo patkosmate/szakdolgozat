@@ -1,14 +1,15 @@
 ---
-- name: Update and upgrade apt packages
+- name: update and upgrade apt packages
   hosts: all 
   become: yes
   tasks:
-    - name: Update packages with apt
+
+    - name: update packages with apt
       when: ansible_pkg_mgr == 'apt'
       apt:
         update_cache: yes
 
-    - name: Upgrade packages with apt
+    - name: upgrade packages with apt
       when: ansible_pkg_mgr == 'apt'
       apt:
         state: latest

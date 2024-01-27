@@ -2,6 +2,7 @@
 - hosts: all
   become: yes
   tasks:
+  
     - name: get hostname and ip
       set_fact:
         remote_hostname: "{{ ansible_hostname }}"
