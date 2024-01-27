@@ -20,8 +20,8 @@
       community.general.mail:
         host: smtp.gmail.com
         port: 587
-        username: patkosmate55@gmail.com
-        password: jwvq fyqv ucyb tymd
+        username: ansible.semaphore1@gmail.com
+        password: zffl lpsi vnua kppd
         to: patkosmate55@gmail.com
         subject: cpu usage alert - {{ ansible_hostname }}
         body: |
@@ -35,8 +35,8 @@
       community.general.mail:
         host: smtp.gmail.com
         port: 587
-        username: patkosmate55@gmail.com
-        password: jwvq fyqv ucyb tymd
+        username: ansible.semaphore1@gmail.com
+        password: zffl lpsi vnua kppd
         to: patkosmate55@gmail.com
         subject: ram usage alert - {{ ansible_hostname }}
         body: |
@@ -50,8 +50,8 @@
       community.general.mail:
         host: smtp.gmail.com
         port: 587
-        username: patkosmate55@gmail.com
-        password: jwvq fyqv ucyb tymd
+        username: ansible.semaphore1@gmail.com
+        password: zffl lpsi vnua kppd
         to: patkosmate55@gmail.com
         subject: disk usage alert - {{ ansible_hostname }}
         body: |
