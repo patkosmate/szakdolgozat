@@ -4,6 +4,7 @@
   vars:
     excluded_hosts:
       - template-standard
+      - test-extend
   tasks:
 
     - name: gather container info
