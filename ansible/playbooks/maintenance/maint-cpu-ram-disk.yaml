@@ -20,9 +20,9 @@
       community.general.mail:
         host: smtp.gmail.com
         port: 587
-        username: ansible.semaphore1@gmail.com
-        password: zffl lpsi vnua kppd
-        to: patkosmate55@gmail.com
+        username: "{{ email_sender }}"
+        password: "{{ email_password }}"
+        to: "{{ email_receiver }}"
         subject: cpu usage alert - {{ ansible_hostname }}
         body: |
           the cpu usage on {{ ansible_hostname }} is {{ cpu_usage.stdout }}%, take action
@@ -35,9 +35,9 @@
       community.general.mail:
         host: smtp.gmail.com
         port: 587
-        username: ansible.semaphore1@gmail.com
-        password: zffl lpsi vnua kppd
-        to: patkosmate55@gmail.com
+        username: "{{ email_sender }}"
+        password: "{{ email_password }}"
+        to: "{{ email_receiver }}"
         subject: ram usage alert - {{ ansible_hostname }}
         body: |
           the ram usage on {{ ansible_hostname }} is {{ ram_usage.stdout }}%, take action
@@ -50,9 +50,9 @@
       community.general.mail:
         host: smtp.gmail.com
         port: 587
-        username: ansible.semaphore1@gmail.com
-        password: zffl lpsi vnua kppd
-        to: patkosmate55@gmail.com
+        username: "{{ email_sender }}"
+        password: "{{ email_password }}"
+        to: "{{ email_receiver }}"
         subject: disk usage alert - {{ ansible_hostname }}
         body: |
           the disk usage on {{ ansible_hostname }} is {{ disk_usage.stdout }}, take action

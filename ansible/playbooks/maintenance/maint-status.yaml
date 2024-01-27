@@ -23,7 +23,7 @@
         host: smtp.gmail.com
         port: 587
         username: "{{ email_sender }}"
-        password: zffl lpsi vnua kppd
+        password: "{{ email_password }}"
         to: "{{ email_receiver }}"
         subject: host unreachable alert - {{ item.name }}
         body: |
