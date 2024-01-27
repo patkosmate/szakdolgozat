@@ -1,6 +1,9 @@
 ---
 - hosts: all
   gather_facts: false
+  vars:
+    excluded_hosts:
+      - template-standard
   tasks:
 
     - name: gather container info
@@ -12,7 +15,7 @@
       register: all_container_info
 
     - name: send mail if host is unreachable
-      when: item.status == 'stopped' and item.name != 'template-standard' #for multiple exclusion: not in excluded_hosts
+      when: item.status == 'stopped' and item.name not in excluded_hosts
       community.general.mail:
         host: smtp.gmail.com
         port: 587
