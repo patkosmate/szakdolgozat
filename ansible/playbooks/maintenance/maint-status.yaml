@@ -4,7 +4,6 @@
   vars:
     excluded_hosts:
       - template-standard
-      - test-extend
   vars_files:
     - secure_vars.yml
   tasks:
