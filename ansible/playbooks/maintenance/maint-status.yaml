@@ -1,0 +1,24 @@
+---
+- hosts: all
+  gather_facts: true
+  tasks:
+    - name: gather container info
+      community.general.proxmox_vm_info:
+        api_host: 192.168.1.10
+        api_user: root@pam
+        api_password: 19990317a
+        node: proxmox
+      register: all_container_info
+
+    - name: send mail if host is unreachable
+      when: item.status == 'stopped' and inventory_hostname != 'template-standard'
+      community.general.mail:
+        host: smtp.gmail.com
+        port: 587
+        username: patkosmate55@gmail.com
+        password: jwvq fyqv ucyb tymd
+        to: patkosmate55@gmail.com
+        subject: host unreachable alert - {{ item.name }}
+        body: |
+          the host {{ item.name }} is unreachable, take action
+      loop: "{{ all_container_info.proxmox_vms | selectattr('status', 'eq', 'stopped') | list }}"
