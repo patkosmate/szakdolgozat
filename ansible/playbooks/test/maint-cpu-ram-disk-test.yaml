@@ -1,0 +1,61 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: gather cpu usage
+      shell: top -bn1 | grep 'Cpu(s)' | awk '{print $2}'
+      register: cpu_usage
+
+    - name: gather ram usage
+      shell: top -bn1 | awk '/MiB Mem/ {printf "%.2f\n", $8/$4 * 100}'
+      register: ram_usage
+
+    - name: gather disk usage
+      shell: "df -h --output=pcent / | awk 'NR==2 {print $1}'"
+      register: disk_usage
+
+    - name: send mail of cpu if needed
+      when: cpu_usage.stdout[:-1]|int > -1
+      community.general.mail:
+        host: smtp.gmail.com
+        port: 587
+        username: "{{ email_sender }}"
+        password: "{{ email_password }}"
+        to: "{{ email_receiver }}"
+        subject: TEST cpu usage alert - {{ ansible_hostname }}
+        body: |
+          the cpu usage on {{ ansible_hostname }} is {{ cpu_usage.stdout }}%, take action
+          
+          ram usage: {{ ram_usage.stdout }}%
+          disk usage: {{ disk_usage.stdout }}
+
+    - name: send mail of ram if needed
+      when: ram_usage.stdout[:-1]|int > -1
+      community.general.mail:
+        host: smtp.gmail.com
+        port: 587
+        username: "{{ email_sender }}"
+        password: "{{ email_password }}"
+        to: "{{ email_receiver }}"
+        subject: TEST ram usage alert - {{ ansible_hostname }}
+        body: |
+          the ram usage on {{ ansible_hostname }} is {{ ram_usage.stdout }}%, take action
+          
+          cpu usage: {{ cpu_usage.stdout }}%
+          disk usage: {{ disk_usage.stdout }}
+
+    - name: send mail of disk if needed
+      when: disk_usage.stdout[:-1]|int > -1
+      community.general.mail:
+        host: smtp.gmail.com
+        port: 587
+        username: "{{ email_sender }}"
+        password: "{{ email_password }}"
+        to: "{{ email_receiver }}"
+        subject: TEST disk usage alert - {{ ansible_hostname }}
+        body: |
+          the disk usage on {{ ansible_hostname }} is {{ disk_usage.stdout }}, take action
+          
+          cpu usage: {{ cpu_usage.stdout }}%
+          ram usage: {{ ram_usage.stdout }}%

@@ -1,0 +1,30 @@
+---
+- hosts: all
+  gather_facts: false
+  vars:
+    excluded_hosts:
+      - template-standard
+  vars_files:
+    - secure_vars.yml
+  tasks:
+
+    - name: gather container info
+      community.general.proxmox_vm_info:
+        api_host: 192.168.1.10
+        node: proxmox
+        api_user: "{{ proxmox_user }}"
+        api_password: "{{ proxmox_password }}"
+      register: all_container_info
+
+    - name: send mail if host is unreachable
+      when: item.status == 'stopped' and item.name not in excluded_hosts
+      community.general.mail:
+        host: smtp.gmail.com
+        port: 587
+        username: "{{ email_sender }}"
+        password: "{{ email_password }}"
+        to: "{{ email_receiver }}"
+        subject: TEST host unreachable alert - {{ item.name }}
+        body: |
+          the host {{ item.name }} is unreachable, take action
+      loop: "{{ all_container_info.proxmox_vms | selectattr('status', 'eq', 'stopped') | list }}"
