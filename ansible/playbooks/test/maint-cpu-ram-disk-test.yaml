@@ -46,7 +46,7 @@
           disk usage: {{ disk_usage.stdout }}
 
     - name: send mail of disk if needed
-      when: disk_usage.stdout[:-1]|int > -1
+      when: disk_usage.stdout[:-1]|int > 0
       community.general.mail:
         host: smtp.gmail.com
         port: 587
