@@ -1,0 +1,18 @@
+---
+- hosts: all
+  tasks:
+
+    - name: get public ip
+      command: dig +short myip.opendns.com @resolver1.opendns.com
+      register: public_ip
+
+    - name: send mail
+      community.general.mail:
+        host: smtp.gmail.com
+        port: 587
+        username: patkosmate55@gmail.com
+        password: 19990317aA!
+        to: patkosmate55@gmail.com #matolay.gyorgy.gmail.com
+        subject: "nesze ip"
+        body: "{{ public_ip.stdout_lines | first }}"
+      when: public_ip.stdout_lines | length > 0
