@@ -12,8 +12,8 @@
         api_password: 19990317a
         clone: 1000
         storage: VM-Drives
-        vmid: 110 #if specific vmid if needed
-        hostname: test-disk #modify to desire hostname
+        vmid: 111 #if specific vmid if needed
+        hostname: test-ansible #modify to desire hostname
         
     - name: start standard lxc container
       community.general.proxmox:
@@ -21,6 +21,6 @@
         node: proxmox
         api_user: root@pam
         api_password: 19990317a
-        vmid: 110 #if specific vmid if needed
-        hostname: test-disk #modify to desire hostname
+        vmid: 111 #if specific vmid if needed
+        hostname: test-ansible #modify to desire hostname
         state: started
