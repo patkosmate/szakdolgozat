@@ -2,10 +2,11 @@
 - hosts: all
   vars:
     excluded_hosts:
-      - template-standard
+      # - template-standard
+      # - template-standard-2
   vars_files:
     - secure_vars.yml
-      # - template-standard-2
+
   tasks:
     - name: gather container info
       community.general.proxmox_vm_info:
