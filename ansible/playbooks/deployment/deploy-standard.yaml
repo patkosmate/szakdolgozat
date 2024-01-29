@@ -1,24 +1,26 @@
 ---
 - hosts: all
+  vars_files:
+    - secure_vars.yml
   tasks:
 
     - name: clone standard lxc container
       community.general.proxmox:
-        node: proxmox
-        api_user: root@pam
-        api_password: 19990317a
         api_host: 192.168.1.10
+        node: proxmox
+        api_user: "{{ proxmox_user }}"
+        api_password: "{{ proxmox_password }}"
         clone: 1000
         storage: VM-Drives
-        vmid: 202 #if specific vmid if needed
-        hostname: test-standard-3 #modify to desire hostname
+        vmid: 110 #if specific vmid if needed
+        hostname: test-disk #modify to desire hostname
         
     - name: start standard lxc container
       community.general.proxmox:
-        node: proxmox
-        api_user: root@pam
-        api_password: 19990317a
         api_host: 192.168.1.10
-        vmid: 201 #if specific vmid if needed
-        hostname: test-standard-3 #modify to desire hostname
+        node: proxmox
+        api_user: "{{ proxmox_user }}"
+        api_password: "{{ proxmox_password }}"
+        vmid: 110 #if specific vmid if needed
+        hostname: test-disk #modify to desire hostname
         state: started
