@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+
+    - name: create a new user
+      user:
+        name: "test"
+        password: "12345 | password_hash('sha512')"
+        state: present
+      become: yes
+
+    - name: Add the user to the sudoers file
+      lineinfile:
+        path: /etc/sudoers
+        line: "test ALL=(ALL) NOPASSWD: ALL"
+        validate: 'visudo -cf %s'
+      become: yes
