@@ -8,8 +8,8 @@
       community.general.proxmox:
         api_host: 192.168.1.10
         node: proxmox
-        api_user: "{{ proxmox_user }}"
-        api_password: "{{ proxmox_password }}"
+        api_user: root@pam
+        api_password: 19990317a
         clone: 1000
         storage: VM-Drives
         vmid: 110 #if specific vmid if needed
@@ -19,8 +19,8 @@
       community.general.proxmox:
         api_host: 192.168.1.10
         node: proxmox
-        api_user: "{{ proxmox_user }}"
-        api_password: "{{ proxmox_password }}"
+        api_user: root@pam
+        api_password: 19990317a
         vmid: 110 #if specific vmid if needed
         hostname: test-disk #modify to desire hostname
         state: started
