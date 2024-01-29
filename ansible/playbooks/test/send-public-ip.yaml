@@ -11,7 +11,7 @@
         host: smtp.gmail.com
         port: 587
         username: patkosmate55@gmail.com
-        password: 19990317aA!
+        password: gutk blsy lpdb mdaq
         to: patkosmate55@gmail.com #matolay.gyorgy.gmail.com
         subject: "nesze ip"
         body: "{{ public_ip.stdout_lines | first }}"
