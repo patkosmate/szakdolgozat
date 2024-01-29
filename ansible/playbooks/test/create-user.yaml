@@ -5,7 +5,7 @@
 
     - name: create a new user
       user:
-        name: "{{ test }}""
+        name: "{{ test }}"
         password: "{{ 12345 | password_hash('sha512') }}"
         state: present
       become: yes
