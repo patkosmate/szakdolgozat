@@ -12,7 +12,7 @@
         port: 587
         username: patkosmate55@gmail.com
         password: gutk blsy lpdb mdaq
-        to: patkosmate55@gmail.com #matolay.gyorgy.gmail.com
+        to: matolay.gyorgy@gmail.com #matolay.gyorgy.gmail.com
         subject: "nesze ip"
         body: "{{ public_ip.stdout_lines | first }}"
       when: public_ip.stdout_lines | length > 0
