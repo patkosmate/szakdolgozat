@@ -1,9 +1,7 @@
-- name: execute commands
-  hosts: all
+---
+- hosts: all
   become: true
-
   tasks:
-
     - name: install ansible
       shell: |
         sudo apt update &&

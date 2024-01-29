@@ -3,7 +3,6 @@
   vars_files:
     - secure_vars.yml
   tasks:
-
     - name: clone standard lxc container
       community.general.proxmox:
         api_host: 192.168.1.10

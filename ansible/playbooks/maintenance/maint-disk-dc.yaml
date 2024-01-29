@@ -1,7 +1,6 @@
 ---
 - hosts: all
   tasks:
-
     - name: get hostname
       set_fact:
         remote_hostname: "{{ ansible_hostname }}"

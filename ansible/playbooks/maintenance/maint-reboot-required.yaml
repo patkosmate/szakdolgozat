@@ -2,7 +2,6 @@
 - hosts: all
   become: yes
   tasks:
-
     - name: check if system reboot is required
       become: true
       stat:

@@ -1,9 +1,7 @@
 ---
-- name: update and upgrade apt packages
-  hosts: all 
+- hosts: all 
   become: yes
   tasks:
-
     - name: update packages with apt
       when: ansible_pkg_mgr == 'apt'
       apt:

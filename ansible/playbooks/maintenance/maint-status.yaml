@@ -1,13 +1,12 @@
 ---
 - hosts: all
-  gather_facts: false
   vars:
     excluded_hosts:
       - template-standard
+      # - template-standard-2
   vars_files:
     - secure_vars.yml
   tasks:
-
     - name: gather container info
       community.general.proxmox_vm_info:
         api_host: 192.168.1.10
