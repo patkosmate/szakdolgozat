@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    username: test-sudo #username
+    password: test-sudo #password
+  tasks:
+
+    - name: create a new user
+      user:
+        name: "{{ username }}"
+        password: "{{ password | password_hash('sha512') }}"
+        state: present
+      become: yes
+
+    - name: add the user to the sudoers file
+      lineinfile:
+        path: /etc/sudoers
+        line: "{{ username }} ALL=(ALL) NOPASSWD: ALL"
+        validate: 'visudo -cf %s'
+      become: yes
