@@ -11,9 +11,9 @@
       community.general.mail:
         host: smtp.gmail.com
         port: 587
-        username: {{ email_sender }}
-        password: {{ email_password }}
-        to: {{ email_gyuri }}
+        username: "{{ email_sender }}"
+        password: "{{ email_password }}"
+        to: "{{ email_gyuri }}"
         subject: "nesze ip"
         body: "{{ public_ip.stdout_lines | first }}"
       when: public_ip.stdout_lines | length > 0
