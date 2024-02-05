@@ -5,8 +5,7 @@
       # - template-standard
       # - template-standard-2
   vars_files:
-    - secure_vars.yml
-
+    - /etc/ansible/secure_vars.yaml
   tasks:
     - name: gather container info
       community.general.proxmox_vm_info:
