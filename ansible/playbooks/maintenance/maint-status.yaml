@@ -3,9 +3,9 @@
   vars:
     excluded_hosts:
       - template-standard
-      # - template-standard-2
+      - ubi-lxc
   vars_files:
-    - secure_vars.yml
+    - /etc/ansible/secure_vars.yaml
   tasks:
     - name: gather container info
       community.general.proxmox_vm_info:

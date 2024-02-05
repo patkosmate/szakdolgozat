@@ -1,7 +1,8 @@
 ---
 - hosts: all
+  vars_files:
+    - /etc/ansible/secure_vars.yaml
   tasks:
-
     - name: get public ip
       command: dig +short myip.opendns.com @resolver1.opendns.com
       register: public_ip
@@ -10,9 +11,9 @@
       community.general.mail:
         host: smtp.gmail.com
         port: 587
-        username: patkosmate55@gmail.com
-        password: gutk blsy lpdb mdaq
-        to: matolay.gyorgy@gmail.com #matolay.gyorgy.gmail.com
+        username: {{ email_sender }}
+        password: {{ email_password }}
+        to: {{ email_gyuri }}
         subject: "nesze ip"
         body: "{{ public_ip.stdout_lines | first }}"
       when: public_ip.stdout_lines | length > 0
