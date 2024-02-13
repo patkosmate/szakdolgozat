@@ -1,5 +1,7 @@
 ---
 - hosts: all
+  vars_files:
+    - /etc/ansible/secure_vars.yaml
   become: yes
   tasks:
     - name: get hostname and ip
@@ -67,7 +69,7 @@
         dest: /tmp/{{ ansible_hostname }}.cfg
 
     - name: copy nrpe config file to monitoring server
-      ansible.builtin.shell: sshpass -p '12345' scp -r /tmp/{{ ansible_hostname }}.cfg root@192.168.1.58:/usr/local/nagios/etc/servers
+      ansible.builtin.shell: sshpass -p '"{{ copy_password }}"' scp -r /tmp/{{ ansible_hostname }}.cfg "{{ copy_user }}":/usr/local/nagios/etc/servers
 
     - name: restart nagios service
-      ansible.builtin.shell: sshpass -p '12345' ssh root@192.168.1.58 sudo systemctl restart nagios.service
+      ansible.builtin.shell: sshpass -p '"{{ copy_password }}"' ssh "{{ copy_user }}" sudo systemctl restart nagios.service
