@@ -7,7 +7,17 @@
       apt:
         update_cache: yes
 
+    - name: update packages with dnf
+      when: ansible_pkg_mgr == 'dnf'
+      dnf:
+        update_cache: yes
+
     - name: upgrade packages with apt
       when: ansible_pkg_mgr == 'apt'
       apt:
-        state: latest
+        state: present
+
+    - name: upgrade packages with dnf
+      when: ansible_pkg_mgr == 'dnf'
+      dnf:
+        state: present
