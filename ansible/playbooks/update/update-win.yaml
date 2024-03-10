@@ -11,7 +11,6 @@
           win_reboot:
             post_reboot_delay: 1800
             reboot_timeout: 1800
-
     - name: Pre-patch tasks
       block:
         - name: Stop Windows Update service
@@ -26,21 +25,18 @@
             name: wuauserv
             start_mode: auto
             state: started
-
     - name: Install Updates - 1st
       win_updates:
         category_names: ['CriticalUpdates', 'SecurityUpdates']
         state: installed
         reboot: yes
         reboot_timeout: 3600
-    
     - name: Install Updates - 2nd
       win_updates:
         category_names: ['CriticalUpdates', 'SecurityUpdates']
         state: installed
         reboot: yes
         reboot_timeout: 3600
-
     - name: Install Updates - 3rd
       win_updates:
         category_names: ['CriticalUpdates', 'SecurityUpdates']
