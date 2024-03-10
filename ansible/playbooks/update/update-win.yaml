@@ -1,0 +1,48 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Rebooting because of long uptime
+      block:
+        - name: Debug output
+          debug:
+            msg: Rebooting because of long uptime
+        - name: Reboot
+          win_reboot:
+            post_reboot_delay: 1800
+            reboot_timeout: 1800
+
+    - name: Pre-patch tasks
+      block:
+        - name: Stop Windows Update service
+          win_service:
+            name: wuauserv
+            state: stopped
+        - name: Pause for 10 seconds
+          pause:
+            seconds: 10
+        - name: Start Windows Update service
+          win_service:
+            name: wuauserv
+            start_mode: auto
+            state: started
+
+    - name: Install Updates - 1st
+      win_updates:
+        category_names: ['CriticalUpdates', 'SecurityUpdates']
+        state: installed
+        reboot: yes
+        reboot_timeout: 3600
+    
+    - name: Install Updates - 2nd
+      win_updates:
+        category_names: ['CriticalUpdates', 'SecurityUpdates']
+        state: installed
+        reboot: yes
+        reboot_timeout: 3600
+
+    - name: Install Updates - 3rd
+      win_updates:
+        category_names: ['CriticalUpdates', 'SecurityUpdates']
+        state: installed
+        reboot: yes
