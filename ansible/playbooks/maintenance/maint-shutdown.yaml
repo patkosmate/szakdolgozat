@@ -3,5 +3,5 @@
   become: yes
   tasks:
   - name: shutdown machine
-    community.general.shutdown:
+    shutdown:
       delay: 5
