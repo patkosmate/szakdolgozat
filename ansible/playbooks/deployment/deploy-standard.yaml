@@ -5,21 +5,21 @@
   tasks:
     - name: clone standard lxc container
       community.general.proxmox:
-        api_host: 192.168.1.10
-        node: proxmox
-        api_user: root@pam
-        api_password: 19990317a
+        api_host: "{{ host }}"
+        node: "{{ node }}"
+        api_user: "{{ user }}"
+        api_password: "{{ password }}"
         clone: 1000
         storage: VM-Drives
         vmid: 111 #if specific vmid if needed
-        hostname: test-ansible #modify to desire hostname
+        hostname: test-ansible #modify to desired hostname
         
     - name: start standard lxc container
       community.general.proxmox:
-        api_host: 192.168.1.10
-        node: proxmox
-        api_user: root@pam
-        api_password: 19990317a
+        api_host: "{{ host }}"
+        node: "{{ node }}"
+        api_user: "{{ user }}"
+        api_password: "{{ password }}"
         vmid: 111 #if specific vmid if needed
-        hostname: test-ansible #modify to desire hostname
+        hostname: test-ansible #modify to desired hostname
         state: started
